@@ -60,58 +60,43 @@ module.exports = function(eleventyConfig) {
     return content;
   });
 
+	// --- START, eleventy-img
+	function imageShortcode(src, alt, sizes="(min-width: 1024px) 100vw, 50vw") {
+		console.log(`Generating image(s) from:  ${src}`)
+		let options = {
+			widths: [600, 900, 1500],
+			formats: ["webp", "jpeg"],
+			urlPath: "src/images/",
+			outputDir: "_site/images/",
+			filenameFormat: function (id, src, width, format, options) {
+				const extension = path.extname(src)
+				const name = path.basename(src, extension)
+				return `${name}-${width}w.${format}`
+			}
+		}
+		// generate images
+		Image(src, options)
 
+		let imageAttributes = {
+			alt,
+			sizes,
+			loading: "lazy",
+			decoding: "async",
+		}
+		// get metadata
+		metadata = Image.statsSync(src, options)
+		return Image.generateHTML(metadata, imageAttributes)
+	}
+	eleventyConfig.addShortcode("image", imageShortcode)
+	// --- END, eleventy-img
 
-
-
-  /* Fetch and transform an image to a `picture` with multiple sources */
-  async function pictureShortcode(
-    src,
-    alt,
-    sizes = "",
-    loading = "eager",
-    decoding = "auto"
-  ) {
-    let metadata = await Image(src, {
-      // Set these however you like (the more widths, the more time to build, so not always a good idea to have a ton)
-      widths: [600, 1200, 1920],
-      // What formats to include. Avif and Webp are small, jpeg is supported more broadly. The browser will pick the right one
-      formats: ["avif", "webp", "jpeg"],
-      // Output images under _site/img/opt. This can help caching
-      outputDir: "_site/img/opt/",
-      // Inform the base path for URLs, e.g. in <source> and <img> elements
-      urlPath: "/img/opt/",
-      // Rename 'box-on-table' to 'box-on-table-hashHere123-1200w.jpg' etc.
-      filenameFormat: function (id, src, width, format, options) {
-        const extension = path.extname(src);
-        const name = path.basename(src, extension);
-
-        return `${name}-${id}-${width}w.${format}`;
-      },
-    });
-
-    let imageAttributes = {
-      alt,
-      sizes,
-      loading,
-      decoding,
-    };
-
-    return Image.generateHTML(metadata, imageAttributes, {
-      whitespaceMode: "inline",
-    });
-  }
-
-  eleventyConfig.addNunjucksAsyncShortcode("picture", pictureShortcode);
-  eleventyConfig.addLiquidShortcode("picture", pictureShortcode);
-  eleventyConfig.addJavaScriptFunction("picture", pictureShortcode);
 
 
 
   // Don't process folders with static assets e.g. images
   eleventyConfig.addPassthroughCopy("favicon.ico");
   eleventyConfig.addPassthroughCopy("static/img");
-  eleventyConfig.addPassthroughCopy("src/images");
+  eleventyConfig.addPassthroughCopy("./src/images");
   eleventyConfig.addPassthroughCopy("admin/");
   // We additionally output a copy of our CSS for use in Netlify CMS previews
   eleventyConfig.addPassthroughCopy("_includes/assets/css/inline.css");
