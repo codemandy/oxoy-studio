@@ -1,7 +1,10 @@
+const sitemap = require("@quasibit/eleventy-plugin-sitemap");
 const { DateTime } = require("luxon");
 const CleanCSS = require("clean-css");
 const UglifyJS = require("uglify-js");
 const htmlmin = require("html-minifier");
+const markdownIt = require("markdown-it");
+const markdownItAttrs = require("markdown-it-attrs");
 const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
 const Image = require("@11ty/eleventy-img");
 const path = require('path');
@@ -21,6 +24,13 @@ module.exports = function(eleventyConfig) {
   // Merge data instead of overriding
   // https://www.11ty.dev/docs/data-deep-merge/
   eleventyConfig.setDataDeepMerge(true);
+
+  // Sitemap
+  eleventyConfig.addPlugin(sitemap, {
+    sitemap: {
+      hostname: "https://example.com",
+    },
+  });
 
   // Date formatting (human readable)
   eleventyConfig.addFilter("readableDate", dateObj => {
@@ -60,11 +70,25 @@ module.exports = function(eleventyConfig) {
     return content;
   });
 
+   //Collections
+   eleventyConfig.addCollection("posts", function (collectionApi) {
+    return collectionApi.getFilteredByGlob("./posts/**/*.md");
+  });
+   eleventyConfig.addCollection("cv", function (collectionApi) {
+    return collectionApi.getFilteredByGlob("./pages/cv.md");
+  });
+   eleventyConfig.addCollection("contact", function (collectionApi) {
+    return collectionApi.getFilteredByGlob("./pages/contact.md");
+  });
+
+// Add the filter.
+  function sortByOrder(values) {
+    let vals = [...values];
+    return vals.sort((a, b) => Math.sign(a.data.order - b.data.order));
+  }
+  eleventyConfig.addFilter("sortByOrder", sortByOrder);
 
 
-
-
-  /* Fetch and transform an image to a `picture` with multiple sources */
   async function pictureShortcode(
     src,
     alt,
@@ -72,64 +96,59 @@ module.exports = function(eleventyConfig) {
     loading = "eager",
     decoding = "auto"
   ) {
-    let metadata = await Image(src, {
-      // Set these however you like (the more widths, the more time to build, so not always a good idea to have a ton)
+    const imagePath = src.replace(/^\//, ''); // Remove leading slash from the image path
+    const metadata = await Image(imagePath, {
       widths: [600, 1200, 1920],
-      // What formats to include. Avif and Webp are small, jpeg is supported more broadly. The browser will pick the right one
       formats: ["avif", "webp", "jpeg"],
-      // Output images under _site/img/opt. This can help caching
       outputDir: "_site/img/opt/",
-      // Inform the base path for URLs, e.g. in <source> and <img> elements
-      urlPath: "/img/opt/",
-      // Rename 'box-on-table' to 'box-on-table-hashHere123-1200w.jpg' etc.
+      urlPath: "img/opt/",
       filenameFormat: function (id, src, width, format, options) {
         const extension = path.extname(src);
         const name = path.basename(src, extension);
-
         return `${name}-${id}-${width}w.${format}`;
       },
     });
-
-    let imageAttributes = {
+  
+    const imageAttributes = {
       alt,
       sizes,
       loading,
       decoding,
     };
-
+  
     return Image.generateHTML(metadata, imageAttributes, {
       whitespaceMode: "inline",
     });
   }
-
+  
   eleventyConfig.addNunjucksAsyncShortcode("picture", pictureShortcode);
   eleventyConfig.addLiquidShortcode("picture", pictureShortcode);
   eleventyConfig.addJavaScriptFunction("picture", pictureShortcode);
-
+  
 
 
   // Don't process folders with static assets e.g. images
   eleventyConfig.addPassthroughCopy("favicon.ico");
   eleventyConfig.addPassthroughCopy("static/img");
-  eleventyConfig.addPassthroughCopy("src/images");
+eleventyConfig.addPassthroughCopy("img/favicon");
   eleventyConfig.addPassthroughCopy("admin/");
   // We additionally output a copy of our CSS for use in Netlify CMS previews
   eleventyConfig.addPassthroughCopy("_includes/assets/css/inline.css");
+  eleventyConfig.addPassthroughCopy("_includes/assets/css/tailwind.css");
+  eleventyConfig.addPassthroughCopy("_includes/assets/fonts/");
 
   /* Markdown Plugins */
-  let markdownIt = require("markdown-it");
-  let markdownItAnchor = require("markdown-it-anchor");
-  let options = {
-    breaks: true,
-    linkify: true
-  };
-  let opts = {
-    permalink: false
-  };
+   // Configure markdown-it
+   const md = markdownIt({
+    html: true, // Enable HTML tags in source
+    breaks: true, // Convert '\n' in paragraphs into <br>
+    linkify: true // Autoconvert URL-like text to links
+  });
+  md.use(markdownItAttrs); // Enable attributes on Markdown elements
 
-  eleventyConfig.setLibrary("md", markdownIt(options)
-    .use(markdownItAnchor, opts)
-  );
+  // Tell 11ty to use markdown-it to parse Markdown files
+  eleventyConfig.setLibrary("md", md);
+
 
   return {
     templateFormats: ["md", "njk", "liquid"],

@@ -21,15 +21,11 @@ body {
 
 
 body {
-	display: grid;
-	height: 100vh;
+
 	/* grid-template-rows: auto 1fr auto; */
 	background-color: var(--background);
 }
 
-main {
-	max-width: 37.5em;
-}
 
 p,
 pre,
@@ -58,20 +54,13 @@ a[href]:not(:hover) {
 img {
   max-width: 100%;
   height: auto;
-  margin-bottom: 15px;
+  margin-bottom: 0px;
 }
 
 @media only screen and (min-width: 768px) {
   img {
-    margin-bottom: 23px;
+    margin-bottom: 0px;
   }
-}
-
-
-
-main {
-	padding-bottom: 2em;
-  margin-top: 0.5em;
 }
 
 
@@ -124,7 +113,7 @@ header nav li a[data-current="current item"] {
 
 /* Posts List */
 article {
-	margin-bottom: 1em;
+	margin-bottom: 0em;
 	padding-bottom: 1em;
 	border-bottom: 1px solid #eee;
 	border-bottom: 1px solid var(--secondary);
@@ -132,7 +121,6 @@ article {
 
 main > section > article > * {
 	margin-top: 0;
-	margin-bottom: .5em;
 }
 
 .cv {

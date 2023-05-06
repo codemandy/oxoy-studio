@@ -1,7 +1,7 @@
 {
-  "name": "Tora_Schultz",
+  "name": "OXOY_studio",
   "version": "1.0.0",
-  "description": "Tora Schultz",
+  "description": "OXOY studio",
   "scripts": {
     "start": "npm-run-all -p dev:*",
     "build": "run-s build:*",
