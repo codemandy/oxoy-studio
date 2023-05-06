@@ -1,4 +1,4 @@
-Sitemap: https://tora-schultz.netlify.app/sitemap.xml
+Sitemap: 
 User-agent: *
 Disallow: /
 Disallow: /admin
