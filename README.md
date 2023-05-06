@@ -1,2 +1,1 @@
-Tora Schultz
-# oxoy-studio
+
