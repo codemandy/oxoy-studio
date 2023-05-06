@@ -1,7 +1,7 @@
 {
-  "name": "OXOY-BOILERPLATE",
-  "version": "1.0.4",
-  "description": "Boilerplate. 11ty, Tailwind, Image optimization, Netlify CMS ",
+  "name": "Tora_Schultz",
+  "version": "1.0.0",
+  "description": "Tora Schultz",
   "scripts": {
     "start": "npm-run-all -p dev:*",
     "build": "run-s build:*",
@@ -11,20 +11,13 @@
     "build:css": "tailwindcss -i _includes/assets/css/tailwind.css -o _includes/assets/css/tailwind.css --postcss",
     "debug": "DEBUG=* npx @11ty/eleventy"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/danurbanowicz/eleventy-netlify-boilerplate"
-  },
   "author": {
-    "name": "Dan Urbanowicz",
-    "email": "dan.urbanowicz@gmail.com",
-    "url": "https://github.com/danurbanowicz"
+    "name": "Oxoy studio",
+    "email": "hello@oxoy-studio.com",
+    "url": "https://github.com/codemandy"
   },
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/danurbanowicz/eleventy-netlify-boilerplate/issues"
-  },
-  "homepage": "https://github.com/danurbanowicz/eleventy-netlify-boilerplate",
+  "homepage": "https://github.com/codemandy",
   "devDependencies": {
     "@11ty/eleventy": "^2.0.0-beta.3",
     "@11ty/eleventy-img": "^3.1.0",
@@ -40,6 +33,9 @@
     "uglify-js": "^3.17.4"
   },
   "dependencies": {
-    "@11ty/eleventy-plugin-webc": "^0.11.0"
+    "@11ty/eleventy-plugin-webc": "^0.11.0",
+    "@quasibit/eleventy-plugin-sitemap": "^2.2.0",
+    "markdown-it": "^13.0.1",
+    "markdown-it-attrs": "^4.1.6"
   }
 }

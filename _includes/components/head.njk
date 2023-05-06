@@ -8,10 +8,10 @@
     {% include "assets/css/inline.css" %}
   {% endset %}
   <style>{{ css | cssmin | safe }}</style>
-   <link rel="stylesheet" href="{{ '/assets/css/tailwind.css' | url }}">
-  {# Uncomment below if you want to include minified inline JavaScript #}
-  {# {% set js %}
-    {% include "assets/js/inline.js" %}
-  {% endset %}
-  <script>{{ js | jsmin | safe }}</script> #}
+   <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}">
+  <script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=DM+Serif+Display&family=Instrument+Serif&display=swap" rel="stylesheet">
+
 </head>

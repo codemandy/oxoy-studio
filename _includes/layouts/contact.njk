@@ -2,10 +2,13 @@
 layout: layouts/base.njk
 section: contact
 ---
-<h1>{{ title }}</h1>
 
-{{ layoutContent | safe }}
-
-{% include "components/form.njk" %}
-
-{% picture "static/img/1.png", "drawing", "100vw"  %}
+<div class="grid md:grid-cols-3 cv ml-3 md:ml-0">
+  <div class="md:col-start-1 md:col-span-3 contact">
+    <div class="ml-5">
+      {% for post in collections.contact %}
+      <a href="mailto:{{ post.data.contact}}">{{ post.data.contact}}</a>
+      {% endfor %}
+    </div>
+  </div>
+</div>

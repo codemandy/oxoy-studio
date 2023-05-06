@@ -3,4 +3,15 @@ layout: layouts/base.njk
 section: home
 ---
 
-{{ layoutContent | safe }}
+<div class="mx-3 md:mx-0 max-w-2xl">
+  {% for post in collections.posts | sortByOrder %}
+  {% picture post.data.image, post.data.alt, "100vw" %}
+{% endfor %}
+</div>
+
+{# <div class="mx-3 md:mx-0 max-w-2xl">
+  {% for post in collections.posts | sortByOrder %}
+  {% set imagePath = pathPrefix + post.data.image %}
+  {% picture imagePath, post.data.alt, "100vw" %}
+  {% endfor %}
+</div> #}

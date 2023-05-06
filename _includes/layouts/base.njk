@@ -6,13 +6,10 @@
 	<body>
 
 		<header>
-			<em>
-				<a href="{{ '/' | url }}">{{ metadata.title }}</a>
-			</em>
 			{% include "components/nav.njk" %}
 		</header>
 
-		<main class="bg-slate-100">
+		<main class="mx-auto md:w-3/5 md:max-w-2xl">
 			{{ layoutContent | safe }}
 		</main>
 

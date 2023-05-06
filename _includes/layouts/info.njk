@@ -1,0 +1,17 @@
+---
+layout: layouts/base.njk
+section: info
+---
+
+<div class="grid md:grid-cols-4 cv">
+  <div class="w-full ml-4 mr-4 md:mr-0 md:ml-0 md:col-span-3">
+    {% for post in collections.cv %}
+    {{ layoutContent | safe }}
+  {% endfor %} 
+  <br><br>
+  <span style="font-size: 9px;">website by <a href="http://www.oxoy-studio.com" target="_blank" rel="noopener">oxoy</a></span>
+  </div>
+    <!-- {% for post in collections.contact %}
+      <a href="mailto:{{ post.data.contact }}">{{ post.data.contact }}</a>
+    {% endfor %} -->
+</div>
