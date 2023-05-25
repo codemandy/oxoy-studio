@@ -74,12 +74,10 @@ module.exports = function(eleventyConfig) {
    eleventyConfig.addCollection("posts", function (collectionApi) {
     return collectionApi.getFilteredByGlob("./posts/**/*.md");
   });
-   eleventyConfig.addCollection("cv", function (collectionApi) {
-    return collectionApi.getFilteredByGlob("./pages/cv.md");
+   eleventyConfig.addCollection("about", function (collectionApi) {
+    return collectionApi.getFilteredByGlob("./pages/about.md");
   });
-   eleventyConfig.addCollection("contact", function (collectionApi) {
-    return collectionApi.getFilteredByGlob("./pages/contact.md");
-  });
+  
 
 // Add the filter.
   function sortByOrder(values) {

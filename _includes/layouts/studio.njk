@@ -1,0 +1,30 @@
+---
+layout: layouts/base.njk
+section: studio
+---
+
+
+
+<div class="w-full md:w-1/2 md:overflow-y-scroll h-screen">
+          <header>
+            {% include "components/nav.njk" %}
+          </header>
+    {% for post in collections.posts | sortByOrder %}
+        <div class=" px-0">
+  <div class="w-full md:w-1/2 md:overflow-y-scroll h-screen">
+    {% for post in collections.about %}
+    {{ layoutContent | safe }}
+  {% endfor %} 
+  <span style="font-size: 9px;">website by <a href="http://www.oxoy-studio.com" target="_blank" rel="noopener">oxoy</a></span>
+  </div>          	
+          {% picture post.data.image, post.data.alt, "100vw" %}
+        </div>
+    {% endfor %}
+  </div>
+
+  <div class="w-full md:w-1/2 md:overflow-y-scroll h-screen">
+    {% for post in collections.about %}
+    {{ layoutContent | safe }}
+  {% endfor %} 
+  <span style="font-size: 9px;">website by <a href="http://www.oxoy-studio.com" target="_blank" rel="noopener">oxoy</a></span>
+  </div>
