@@ -34,7 +34,7 @@ module.exports = function(eleventyConfig) {
 
   // Date formatting (human readable)
   eleventyConfig.addFilter("readableDate", dateObj => {
-    return DateTime.fromJSDate(dateObj).toFormat("dd LLL yyyy");
+    return DateTime.fromJSDate(date>Obj).toFormat("dd LLL yyyy");
   });
 
   // Date formatting (machine readable)
@@ -134,6 +134,7 @@ eleventyConfig.addPassthroughCopy("img/favicon");
   eleventyConfig.addPassthroughCopy("admin/");
   // We additionally output a copy of our CSS for use in Netlify CMS previews
   eleventyConfig.addPassthroughCopy("_includes/assets/css/inline.css");
+  eleventyConfig.addPassthroughCopy("_includes/assets/js/y-scroll.js");
   eleventyConfig.addPassthroughCopy("_includes/assets/css/tailwind.css");
   eleventyConfig.addPassthroughCopy("_includes/assets/fonts/");
 
